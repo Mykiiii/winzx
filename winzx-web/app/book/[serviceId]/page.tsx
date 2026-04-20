@@ -36,41 +36,51 @@ export default function BookPage({ params }: { params: { serviceId: string } }) 
   }
 
   return (
-    <section className="max-w-xl space-y-6">
-      <h1 className="text-3xl font-bold">Book this service</h1>
-      <p className="text-sm text-slate-600">
-        This MVP form uses a buyer user ID directly. In the next iteration, this will come from authenticated session.
-      </p>
+    <section className="mx-auto grid max-w-2xl gap-6">
+      <div className="grid gap-3">
+        <p className="text-sm font-bold uppercase text-indigo-600">Booking</p>
+        <h1 className="text-4xl font-bold text-gray-950">Confirm your session</h1>
+        <p className="text-base leading-7 text-gray-600">
+          Choose the buyer account and time slot for this service.
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-xl border border-slate-200 bg-white p-5">
-        <label className="block text-sm font-medium">
+      <form onSubmit={handleSubmit} className="grid gap-5 rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
+        <label className="grid gap-2 text-sm font-semibold text-gray-800">
           Buyer user ID
           <input
             value={buyerId}
             onChange={(e) => setBuyerId(e.target.value)}
             required
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
+            className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-950 outline-none transition-all duration-200 placeholder:text-gray-400 focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-100"
             placeholder="cuid..."
           />
         </label>
 
-        <label className="block text-sm font-medium">
+        <label className="grid gap-2 text-sm font-semibold text-gray-800">
           Time slot
           <input
             type="datetime-local"
             value={timeSlot}
             onChange={(e) => setTimeSlot(e.target.value)}
             required
-            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
+            className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-950 outline-none transition-all duration-200 focus:border-indigo-600 focus:bg-white focus:ring-4 focus:ring-indigo-100"
           />
         </label>
 
-        <button type="submit" className="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500">
+        <button
+          type="submit"
+          className="cursor-pointer rounded-2xl bg-indigo-600 px-5 py-3 font-semibold text-white shadow-md transition-all duration-200 hover:bg-indigo-700 hover:shadow-xl active:scale-95"
+        >
           Confirm booking
         </button>
       </form>
 
-      {status ? <p className="text-sm text-slate-700">{status}</p> : null}
+      {status ? (
+        <p className="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-md">
+          {status}
+        </p>
+      ) : null}
     </section>
   );
 }
