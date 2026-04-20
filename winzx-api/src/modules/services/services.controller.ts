@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CreateServiceDto } from './dto.create-service';
 import { ServicesService } from './services.service';
 
@@ -9,6 +9,11 @@ export class ServicesController {
   @Post()
   create(@Body() dto: CreateServiceDto) {
     return this.servicesService.create(dto);
+  }
+
+  @Get()
+  list(@Query('userId') userId?: string) {
+    return this.servicesService.list(userId);
   }
 
   @Get('user/:userId')

@@ -16,7 +16,12 @@ export class BookingsService {
     if (!user) throw new NotFoundException('Buyer not found');
     if (!service) throw new NotFoundException('Service not found');
 
-    const slot = new Date(dto.timeSlot);
+    const requestedTime = dto.timeSlot ?? dto.time;
+    if (!requestedTime) {
+      throw new BadRequestException('Time is required');
+    }
+
+    const slot = new Date(requestedTime);
     if (Number.isNaN(slot.getTime())) {
       throw new BadRequestException('Invalid time slot');
     }
@@ -38,14 +43,28 @@ export class BookingsService {
         userId: dto.userId,
         serviceId: dto.serviceId,
         timeSlot: slot,
-        status: BookingStatus.pending,
+        status: BookingStatus.confirmed,
       },
+      include: { service: true, user: true },
+    });
+  }
+
+  list(userId?: string) {
+    return this.prisma.booking.findMany({
+      where: userId
+        ? {
+            OR: [{ userId }, { service: { userId } }],
+          }
+        : undefined,
+      include: { service: true, user: true },
+      orderBy: { timeSlot: 'asc' },
     });
   }
 
   listByService(serviceId: string) {
     return this.prisma.booking.findMany({
       where: { serviceId },
+      include: { service: true, user: true },
       orderBy: { timeSlot: 'asc' },
     });
   }

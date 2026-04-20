@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { Navbar } from '@/components/navbar';
 
 export const metadata: Metadata = {
   title: 'Winzx',
@@ -10,7 +11,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <main className="mx-auto min-h-screen max-w-5xl px-6 py-10">{children}</main>
+        <div className="min-h-screen bg-gray-50">
+          <Navbar />
+          <main className="mx-auto max-w-5xl px-4 py-10">{children}</main>
+        </div>
       </body>
     </html>
   );
